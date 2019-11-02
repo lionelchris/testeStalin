@@ -1,0 +1,64 @@
+//onesignal code
+buildscript {
+    repositories {
+        maven { url 'https://plugins.gradle.org/m2/'}
+    }
+    dependencies {
+        classpath 'gradle.plugin.com.onesignal:onesignal-gradle-plugin:[0.11.0, 0.99.99]'
+    }
+}
+apply plugin: 'com.onesignal.androidsdk.onesignal-gradle-plugin'
+
+repositories {
+    maven { url 'https://maven.google.com' }
+}
+//onesignal code
+apply plugin: 'com.android.application'
+
+android {
+    signingConfigs {
+        config {
+            keyAlias 'construmercado'
+            keyPassword 'Deuseamor1010*'
+            storeFile file('D:/OneDrive/Documentos Corporativos/APPs/ConstruMercado/Keys/chave.keystore')
+            storePassword 'Senha1010*'
+        }
+    }
+    compileSdkVersion 28
+    defaultConfig {
+        applicationId 'br.com.construmercado.premium'
+        //onesignal
+        manifestPlaceholders = [
+                onesignal_app_id               : 'bba4160f-e052-4b63-a4d6-0f8a7ea0cbbc',
+                // Project number pulled from dashboard, local value is ignored.
+                onesignal_google_project_number: 'REMOTE'
+        ]
+        //onesignal
+        minSdkVersion 16
+        targetSdkVersion 28
+        versionName '3.3.1'
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        signingConfig signingConfigs.config
+        versionNameSuffix '3.3.2'
+        versionCode 303020
+    }
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            versionNameSuffix '3.1.1'
+            zipAlignEnabled true
+        }
+    }
+    productFlavors {
+    }
+}
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'com.android.support.constraint:constraint-layout:2.0.0-beta3'
+    testImplementation 'junit:junit:4.13-beta-3'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    implementation 'com.onesignal:OneSignal:3.12.2'
+}
